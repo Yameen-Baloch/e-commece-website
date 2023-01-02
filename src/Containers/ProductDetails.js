@@ -11,16 +11,18 @@ const ProductDetails = () => {
   let product = useSelector((state) => state.product);
   const { image, title, price, category, description } = product;
   const dispatch = useDispatch();
-  const fetchProductDetail = async (id) => {
-    const response = await axios
-      .get(`https://fakestoreapi.com/products/${id}`)
-      .catch((err) => {
-        console.log("Err: ", err);
-      });
-    dispatch(selectedProduct(response.data));
-  };
+  
 
   useEffect(() => {
+    const fetchProductDetail = async (id) => {
+        const response = await axios
+          .get(`https://fakestoreapi.com/products/${id}`)
+          .catch((err) => {
+            console.log("Err: ", err);
+          });
+        dispatch(selectedProduct(response.data));
+      };
+
     if (productId && productId !== "") fetchProductDetail(productId);
     return () =>{
         dispatch(RemoveselectedProduct())
@@ -41,7 +43,7 @@ const ProductDetails = () => {
               <div className="column rp">
                 <h1>{title}</h1>
                 <h2>
-                  <a href="" className="ui teal tag label">${price}</a>
+                  <a href="/#" className="ui teal tag label">$ {price}</a>
                 </h2>
                 <h3 className="ui brown block header">{category}</h3>
                 <p>{description}</p>
